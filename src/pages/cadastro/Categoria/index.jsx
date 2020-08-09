@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
@@ -30,6 +30,14 @@ const CadastroCategoria = () => {
     setCategorias([...categorias, categoria])
     setCategoria(valoresIniciais)
   }
+
+  useEffect(() => {
+    const URL = 'http://localhost:8080/categorias'
+    fetch(URL)
+      .then(res => res.json())
+      .then(data => setCategorias([...data]))
+  }, [])
+
   return (
     <PageDefault>
       <h1>Cadastro de Categoria: {categoria.nome}</h1>
@@ -44,14 +52,14 @@ const CadastroCategoria = () => {
           onChange={handleChange} />
 
         <FormField
-          label="Descrição da Categoria:"
+          label="Descrição"
           type="textarea"
           name="descricao"
           value={categoria.descricao}
           onChange={handleChange} />
 
         <FormField
-          label="Cor da Categoria"
+          label="Cor"
           type="color"
           name="cor"
           value={categoria.cor}
